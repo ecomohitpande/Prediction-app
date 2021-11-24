@@ -1,4 +1,4 @@
-my_packages = c("shiny", "prophet", "lubridate", "dygraphs", "aweek", "plotly")
+my_packages = c("shiny")
 
 install_if_missing = function(p) {
   if (p %in% rownames(installed.packages()) == FALSE) {
