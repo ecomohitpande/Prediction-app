@@ -1,0 +1,14 @@
+ui <- dashboardPage(
+  dashboardHeader(title = "Fb"),
+  dashboardSidebar(
+    width = 0
+  ),
+  dashboardBody(
+    box(title = "Forecast", status = "primary",height = "595" ,solidHeader = T,
+        dygraphOutput ("graph")),
+    box( title = " Details", status = "primary", height = 
+           "595",width = "6",solidHeader = T, 
+         column(width = 12,
+                DT::dataTableOutput("out"),style = "height:500px; overflow-y: scroll;overflow-x: scroll;"
+         )
+    )))
