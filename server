@@ -1,7 +1,7 @@
 server = function(input, output) {
   set.seed(1234)
   
-  
+  p <- read.csv("test", ".csv", sep="")
   output$graph <- renderDygraph ({
     
     p$date= parse_date_time(p$date, "ym")
