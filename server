@@ -1,45 +1,11 @@
-server = function(input, output) {
-  set.seed(1234)
-  
-  p <- read.csv("test", ".csv", sep="")
-  output$graph <- renderDygraph ({
-    
-    p$date= parse_date_time(p$date, "ym")
-    ds<- p$date
-    y<- p$actual
-    df<-data.frame(ds,y)
-    
-    m<- prophet(df)
-    
-    future <- make_future_dataframe(m, periods = 12, freq = 'month')
-    fcst <- predict(m, future)
-    
-    forecast<- tail(fcst[c('yhat', 'yhat_lower','yhat_upper')])
-    dyplot.prophet(m, fcst)})
-  
-  
-  
-  output$out <- renderDataTable ({
-    
-    p$date= parse_date_time(p$date, "ym")
-    ds<- p$date
-    y<- p$actual
-    df<-data.frame(ds,y)
-    
-    m<- prophet(df)
-    
-    future <- make_future_dataframe(m, periods = 12, freq = 'month')
-    fcst <- predict(m, future)
-    
-    forecast<- tail(fcst[c('yhat', 'yhat_lower','yhat_upper')])
-    
-    weekly<-get_date(week = 1:6, year = 2021)
-    weekly<- as.character(weekly)
-    f<-data.frame(weekly,forecast)
-    
-    f})
-  
-  
-  
-  
-}
+
+library(shiny)
+ function(input, output, session) {
+  output$test.output <- renderText(
+    paste0("You have selected ", input$test.input)
+  )
+ }
+
+
+
+
