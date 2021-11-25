@@ -1,5 +1,12 @@
 fluidPage(
-  h1("Title"),
-  selectInput("test.input", "Select a letter", choices = c("a", "b", "c")),
-  textOutput("test.output")
-)
+  titlePanel("Product Level Weekly Forecast"),
+  sidebarLayout(
+    sidebarPanel(
+      selectInput("id", "Select The Prduct",choices = c("actual", "g"))
+    ), 
+    mainPanel(
+      tableOutput("out"),
+      tableOutput("out1"),
+      dygraphOutput("graph"),
+      dygraphOutput("graph0")
+    )))
