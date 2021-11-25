@@ -1,10 +1,85 @@
-
-library(shiny)
- function(input, output, session) {
-  output$test.output <- renderText(
-    paste0("You have selected ", input$test.input)
-  )
- }
+function(input, output) {
+  
+  output$out <- renderTable({
+    
+    if(input$id =="actual"){
+      p <- read.csv("test.csv")
+      
+      p$date= parse_date_time(p$date, "ym")
+      ds<- p$date
+      y<- p$actual
+      df<-data.frame(ds,y)
+      
+      m<- prophet(df)
+      
+      future <- make_future_dataframe(m, periods = 10, freq = 'month')
+      fcst <- predict(m, future)
+      
+      forecast<- tail(fcst[c('yhat', 'yhat_lower','yhat_upper')],10)
+      
+      weekly<-get_date(week = 1:10, year = 2021)
+      weekly<- as.character(weekly)
+      f<-data.frame(weekly,forecast)
+      
+      subset(p, p$id == input$id) 
+      f} })
+  
+  output$graph <- renderDygraph({
+    
+    if(input$id =="actual"){
+      p <- read.csv("test.csv")
+       p$date= parse_date_time(p$date, "ym")
+      ds<- p$date
+      y<- p$actual
+      df<-data.frame(ds,y)
+      
+      m<- prophet(df)
+      
+      future <- make_future_dataframe(m, periods = 10, freq = 'month')
+      fcst <- predict(m, future)
+      dyplot.prophet(m, fcst)}
+  })
+  ######################################################################################################### 
+  output$out1 <- renderTable({
+    
+    if(input$id =="g"){
+      p <- read.csv("test.csv")
+      p$date= parse_date_time(p$date, "ym")
+      ds<- p$date
+      y<- p$g
+      df<-data.frame(ds,y)
+      
+      m<- prophet(df)
+      
+      future <- make_future_dataframe(m, periods = 10, freq = 'month')
+      fcst <- predict(m, future)
+      
+      forecast<- tail(fcst[c('yhat', 'yhat_lower','yhat_upper')],10)
+      
+      weekly<-get_date(week = 1:10, year = 2021)
+      weekly<- as.character(weekly)
+      f<-data.frame(weekly,forecast)
+      
+      subset(p, p$id == input$id) 
+      f}
+  })
+  
+  output$graph0 <- renderDygraph({
+    
+    if(input$id =="g"){
+      p <- read.csv("test.csv")
+      p$date= parse_date_time(p$date, "ym")
+      ds<- p$date
+      y<- p$g
+      df<-data.frame(ds,y)
+      
+      m<- prophet(df)
+      
+      future <- make_future_dataframe(m, periods = 10, freq = 'month')
+      fcst <- predict(m, future)
+      dyplot.prophet(m, fcst)}
+  })
+}
 
 
 
