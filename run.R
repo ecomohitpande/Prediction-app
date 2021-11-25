@@ -1,5 +1,12 @@
 library(shiny)
 
+library(shiny)
+library(prophet)
+library(lubridate)
+library(dygraphs)
+library(aweek)
+
+
 port <- Sys.getenv('PORT')
 
 shiny::runApp(
